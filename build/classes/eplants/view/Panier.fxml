@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="eplants.controleur.PanierController">
+   <children>
+      <TableView fx:id="paniertable" layoutX="28.0" layoutY="60.0" prefHeight="273.0" prefWidth="415.0">
+        <columns>
+          <TableColumn fx:id="imgColonne" prefWidth="75.0" text="Produit" />
+          <TableColumn fx:id="nomColonne" prefWidth="85.0" text="Nom Produit" />
+            <TableColumn fx:id="qteColonne" prefWidth="85.0" text="Quantite" />
+            <TableColumn fx:id="puColonne" prefWidth="85.0" text="prix unitaire" />
+            <TableColumn fx:id="ptColonne" prefWidth="84.0" text="prix total" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
