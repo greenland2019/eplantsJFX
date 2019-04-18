@@ -26,6 +26,8 @@ public class Livraison {
         this.etat = etat;
     }
 
+   
+
     public int getId() {
         return id;
     }

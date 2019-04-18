@@ -16,12 +16,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -104,13 +107,47 @@ public class ProduitController implements Initializable {
              quant.setLayoutX(80);
              
              panbutton.setOnAction((event) -> {
-                 Panier pan = new Panier(3, p.getId(), quant.getText().equalsIgnoreCase("")?1:Integer.valueOf(quant.getText()), "");
-                 if(!pas.checkproduit(pan))
-                 pas.ajouterPanier(pan);
+                 
+                 try{
+                Panier pan = new Panier(3, p.getId(), quant.getText().equalsIgnoreCase("")?1:Integer.valueOf(quant.getText()), "");
+                
+                 if(!verifqt(p, Integer.valueOf(quant.getText())))
+                 {
+                      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Quantité inssufisante");
+        alert.show();
+                 }
+                 
+                 else if(!pas.checkproduit(pan))
+                 { pas.ajouterPanier(pan);
+                  Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Produit ajouté au panier avec succés!");
+        alert.show();}
                  else
-                     pas.updatepanier(pan);
+                 { pas.updatepanier(pan);
+                  Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("quantité modifié avec succés!");
+        alert.show();
+                 }
                      
-             });
+             }
+                 
+                    catch(Exception ex){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Information ");
+        alert.setHeaderText(null);
+        alert.setContentText("Saisir un entier correct!");
+        alert.show();
+               }
+             }
+                  
+                 );
              
               if(i%3==0 && i!=0){
              row +=1;
@@ -138,4 +175,26 @@ public class ProduitController implements Initializable {
        
     }    
     
+    
+    public boolean verifqt(Produit p,int x){
+        if(p.getStock()<x)
+        {return false;}
+        
+        
+        return true;
+}
+     public boolean validqte(String qte){
+        Pattern p = Pattern.compile("[0-9]+");
+        Matcher m = p.matcher(qte);
+        if(m.find() && m.group().equals(qte))
+        
+        {
+            return true;}
+        else {
+            
+            return false;}
+        
+        
+        
+}
 }

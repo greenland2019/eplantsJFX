@@ -7,6 +7,8 @@ package eplants.services;
 
 
 import eplants.config.ConnexionSingleton;
+import eplants.entities.Commande;
+import eplants.entities.Livraison;
 import eplants.entities.Panier;
 import eplants.entities.Produit;
 import java.sql.Date;
@@ -94,8 +96,9 @@ public class PanierService {
     }
     
     
-    public ObservableList<Panier> DisplayAll(int user_id){
-        String req="select * from panier where user_id='"+user_id+"'";
+    public ObservableList<Panier> DisplayAll(int user_id,String search){
+        
+        String req="select * from panier p inner join produit pr on p.produit_id = pr.id where p.user_id='"+user_id+"' and  pr.nom like '%"+search+"%'";
         ObservableList<Panier> list=FXCollections.observableArrayList();       
         
         try {
@@ -116,5 +119,45 @@ public class PanierService {
         }
         return list;
     }
+    
+     public void modifierpanier(Panier p){
+      String req="update panier set quantite='"+p.getQuantite()+"' where user_id='"+p.getUser_id()+"' and produit_id='"+p.getProduit_id()+"'  ";
+        
+        try {
+            st.executeUpdate(req);
+      }
+            
+         catch (SQLException ex) {
+            Logger.getLogger(ProduitService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public void supppanier(int x , int y ){
+      String req="delete from panier where produit_id='"+x+"'and user_id='"+y+"'  ";
+        
+        try {
+            st.executeUpdate(req);
+      }
+            
+         catch (SQLException ex) {
+            Logger.getLogger(ProduitService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+      public void suppaniers(int user_id) {
+        
+          
+           
+             String req2 = "delete from panier where user_id='"+user_id+"'  ";
+        try {
+           
+            
+            
+           
+           st.executeUpdate(req2);
+
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }
